@@ -3,5 +3,61 @@
 @tailwind utilities;
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis handles smooth scroll — native smooth-scroll conflicts with it */
+  scroll-behavior: auto;
+}
+
+/* Prevent white <html>/<body> from showing through behind React root */
+html.dark,
+html.dark body {
+  background-color: #141414;
+}
+
+/* ── Horizontal scroll section ──────────────────────────── */
+.h-scroll-section {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.features-strip {
+  display: flex;
+  align-items: stretch;
+  will-change: transform;
+}
+
+/* ── Scroll-reveal initial state ─────────────────────────── */
+.gsap-word {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ── Progress bar ────────────────────────────────────────── */
+#gsap-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* ── Mobile: disable horizontal scroll ───────────────────── */
+@media (max-width: 768px) {
+  .h-scroll-section {
+    overflow: visible;
+    min-height: unset;
+  }
+  .features-strip {
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 0 24px !important;
+    gap: 16px !important;
+    transform: none !important;
+  }
+  .feature-card {
+    width: 100% !important;
+    min-width: unset !important;
+  }
 }

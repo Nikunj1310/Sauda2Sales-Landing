@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Moon, Sun, Smartphone, AlignJustify, Users, CheckCircle2,
   Bell, Search, FolderOpen, UserMinus, Menu, X,
   MapPin, Phone, Clock,
 } from 'lucide-react'
+import { initScrollAnimations } from './scrollAnimations'
 
 // ── Navbar ────────────────────────────────────────────────────────────
 function Navbar({ dark, toggleDark }) {
@@ -19,7 +20,6 @@ function Navbar({ dark, toggleDark }) {
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-[#141414] border-b border-gray-100 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
         <a href="#" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex-shrink-0" />
           <span className="font-bold text-gray-900 dark:text-white text-lg tracking-tight">
@@ -27,7 +27,6 @@ function Navbar({ dark, toggleDark }) {
           </span>
         </a>
 
-        {/* Desktop nav links */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map(({ label, href }) => (
             <a
@@ -40,7 +39,6 @@ function Navbar({ dark, toggleDark }) {
           ))}
         </div>
 
-        {/* Desktop actions */}
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={toggleDark}
@@ -57,7 +55,6 @@ function Navbar({ dark, toggleDark }) {
           </a>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           className="md:hidden text-gray-600 dark:text-gray-300"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -67,7 +64,6 @@ function Navbar({ dark, toggleDark }) {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
       {menuOpen && (
         <div className="md:hidden bg-white dark:bg-[#141414] border-t border-gray-100 dark:border-gray-800 px-6 py-4 flex flex-col gap-4">
           {navLinks.map(({ label, href }) => (
@@ -104,18 +100,23 @@ function Navbar({ dark, toggleDark }) {
 // ── Hero ──────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="bg-white dark:bg-[#141414] py-16 md:py-24 px-6">
+    <section id="hero-section" className="bg-white dark:bg-[#141414] py-16 md:py-24 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        {/* Text */}
         <div className="flex-1">
-          <h1 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] mb-6">
+          <h1
+            id="hero-heading"
+            className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] mb-6"
+          >
             The Digital Catalog System for Fabric Wholesalers
           </h1>
-          <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-lg">
+          <p
+            id="hero-subtext"
+            className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-lg"
+          >
             Stop sending catalog photos on WhatsApp. Give your buyers a private
             branded app — and manage everything from one place.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div id="hero-cta" className="flex flex-wrap gap-3">
             <a
               href="#contact"
               className="px-6 py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-semibold text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"
@@ -131,8 +132,7 @@ function Hero() {
           </div>
         </div>
 
-        {/* Hero image — replace src with your actual fabric photo */}
-        <div className="flex-1 w-full">
+        <div id="hero-image-wrap" className="flex-1 w-full" style={{ willChange: 'transform' }}>
           <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 dark:bg-gray-800">
             <img
               src="/fabric.jpg"
@@ -174,10 +174,10 @@ function ProblemSection() {
   return (
     <section className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-12 scroll-reveal">
           Still running your business on WhatsApp?
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 stagger-in">
           {PROBLEMS.map(({ Icon, title, description }) => (
             <div
               key={title}
@@ -201,10 +201,10 @@ function SolutionSection() {
   return (
     <section className="bg-white dark:bg-[#141414] py-20 px-6">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-6">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-6 scroll-reveal">
           One system. Two apps. Total control.
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed">
+        <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed fade-up">
           Sauda2Sales gives you a private seller app to manage your full catalog — and a
           white-labeled buyer app your dealers install on their phones. Push a product live
           and every approved buyer gets notified instantly. Pull it when it's gone. All
@@ -215,7 +215,7 @@ function SolutionSection() {
   )
 }
 
-// ── Features Section ──────────────────────────────────────────────────
+// ── Features Section — horizontal scroll ─────────────────────────────
 const FEATURES = [
   {
     Icon: CheckCircle2,
@@ -250,39 +250,70 @@ const FEATURES = [
     iconBg: 'bg-indigo-50 dark:bg-indigo-900/20',
     iconColor: 'text-indigo-500',
     title: 'Order Management',
-    description: "All buyer requests land in your app. See pending orders, mark them handled. Nothing falls through the cracks.",
+    description: "All buyer requests land in your app. See pending orders, mark them handled. Nothing falls through.",
   },
   {
     Icon: UserMinus,
     iconBg: 'bg-pink-50 dark:bg-pink-900/20',
     iconColor: 'text-pink-500',
     title: 'Controlled Access',
-    description: 'You decide who sees your catalog. Approve buyers individually. Reject or remove anyone, anytime.',
+    description: 'You decide who sees your catalog. Approve buyers individually. Remove anyone, anytime.',
   },
 ]
 
 function FeaturesSection() {
   return (
-    <section id="features" className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-12">
+    <section
+      id="features"
+      className="h-scroll-section bg-gray-50 dark:bg-[#1a1a1a]"
+      style={{ minHeight: '100vh' }}
+    >
+      {/* Heading — stays visible while section is pinned */}
+      <div className="px-6 pt-14 pb-8 text-center">
+        <span className="text-xs font-semibold tracking-[0.25em] uppercase text-violet-500">
+          What you get
+        </span>
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mt-3 scroll-reveal">
           Everything your fabric business needs
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+      </div>
+
+      {/* Horizontal card strip */}
+      <div className="overflow-hidden">
+        <div
+          className="features-strip"
+          style={{
+            gap: '24px',
+            paddingLeft: '48px',
+            paddingRight: '48px',
+            width: 'max-content',
+          }}
+        >
           {FEATURES.map(({ Icon, iconBg, iconColor, title, description }) => (
             <div
               key={title}
-              className="bg-white dark:bg-[#242424] rounded-2xl p-7 border border-gray-100 dark:border-gray-800"
+              className="feature-card bg-white dark:bg-[#242424] rounded-2xl p-8 border border-gray-100 dark:border-gray-800 flex flex-col"
+              style={{
+                width: '360px',
+                minWidth: '360px',
+                flexShrink: 0,
+                willChange: 'transform',
+              }}
             >
-              <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-5`}>
+              <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-6`}>
                 <Icon size={22} className={iconColor} />
               </div>
-              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{title}</h3>
+              <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-3">{title}</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{description}</p>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Desktop scroll hint */}
+      <p className="hidden md:block text-center text-xs text-gray-400 dark:text-gray-600 mt-8 mb-6 tracking-[0.2em] uppercase">
+        scroll to explore →
+      </p>
     </section>
   )
 }
@@ -310,10 +341,10 @@ function HowItWorks() {
   return (
     <section id="how-it-works" className="bg-white dark:bg-[#141414] py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-16 scroll-reveal">
           Up and running in 3 steps
         </h2>
-        <div className="grid md:grid-cols-3 gap-10 text-center">
+        <div className="grid md:grid-cols-3 gap-10 text-center stagger-in">
           {STEPS.map(({ number, title, description }) => (
             <div key={number} className="flex flex-col items-center">
               <div className="w-14 h-14 rounded-full bg-gray-900 dark:bg-white flex items-center justify-center mb-5 flex-shrink-0">
@@ -341,10 +372,10 @@ function BuiltFor() {
   return (
     <section className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-10 scroll-reveal">
           Built for the fabric trade
         </h2>
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4 stagger-in">
           {BUILT_FOR.map((item, i) => (
             <li key={i} className="flex items-start gap-3">
               <span className="mt-2 w-2 h-2 rounded-full bg-violet-500 flex-shrink-0" />
@@ -361,8 +392,8 @@ function BuiltFor() {
 function PricingSection() {
   return (
     <section id="pricing" className="bg-white dark:bg-[#141414] py-20 px-6">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
+      <div className="max-w-3xl mx-auto text-center fade-up">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 scroll-reveal">
           Pricing
         </h2>
         <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mb-8">
@@ -398,7 +429,6 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    // TODO: POST form data to your backend or email service (e.g. Formspree, EmailJS)
     await new Promise(r => setTimeout(r, 800))
     setLoading(false)
     setSubmitted(true)
@@ -407,14 +437,14 @@ function ContactForm() {
   return (
     <section id="contact" className="bg-white dark:bg-[#141414] py-20 px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-3">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-3 scroll-reveal">
           Ready to modernize your catalog?
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 text-center mb-12">
+        <p className="text-gray-500 dark:text-gray-400 text-center mb-12 fade-up">
           Tell us about your business and we'll set up a free 15-minute walkthrough.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="grid md:grid-cols-2 gap-8 items-start stagger-in">
           {/* Contact info */}
           <div className="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-100 dark:border-gray-800 rounded-2xl p-8 flex flex-col gap-6">
             <div>
@@ -553,12 +583,23 @@ function Footer() {
 
 // ── Root App ──────────────────────────────────────────────────────────
 export default function App() {
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(true) // default dark for a sophisticated look
 
   const toggleDark = () => setDark(d => !d)
 
+  // Apply dark class to <html> so Tailwind dark: variants work everywhere
+  // and <html>/<body> background doesn't bleed through as white
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark)
+  }, [dark])
+
+  useEffect(() => {
+    const cleanup = initScrollAnimations()
+    return cleanup || (() => {})
+  }, [])
+
   return (
-    <div className={dark ? 'dark' : ''}>
+    <div>
       <div className="bg-white dark:bg-[#141414] min-h-screen">
         <Navbar dark={dark} toggleDark={toggleDark} />
         <Hero />
