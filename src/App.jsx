@@ -28,6 +28,7 @@ function Navbar({ dark, toggleDark }) {
     { label: 'Features', href: '#features' },
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'Visual Search', href: '#visual-search' },
+    { label: 'Gallery', href: '#gallery' },
     { label: 'Seller Types', href: '#seller-types' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
@@ -113,7 +114,36 @@ function Navbar({ dark, toggleDark }) {
   )
 }
 
+function ImageTile({ src, alt, className = '', imageClassName = '' }) {
+  const handleError = (event) => {
+    const target = event.currentTarget
+    target.style.display = 'none'
+    if (target.parentElement) {
+      target.parentElement.style.background =
+        'linear-gradient(135deg, #0f172a 0%, #312e81 45%, #7c3aed 100%)'
+    }
+  }
+
+  return (
+    <div className={`overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800 ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full h-full object-cover ${imageClassName}`}
+        loading="lazy"
+        onError={handleError}
+      />
+    </div>
+  )
+}
+
 // ── Hero ──────────────────────────────────────────────────────────────
+const HERO_THUMBNAILS = [
+  { src: '/images/hero-thumb-1.jpg', alt: 'Fabric catalog tiles' },
+  { src: '/images/hero-thumb-2.jpg', alt: 'Catalog detail with pricing' },
+  { src: '/images/hero-thumb-3.jpg', alt: 'Buyer app order preview' },
+]
+
 function Hero() {
   return (
     <section id="hero-section" className="bg-white dark:bg-[#141414] py-16 md:py-24 px-6">
@@ -152,17 +182,20 @@ function Hero() {
         </div>
 
         <div id="hero-image-wrap" className="flex-1 w-full" style={{ willChange: 'transform' }}>
-          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 dark:bg-gray-800 shadow-2xl shadow-violet-500/10">
-            <img
-              src="/fabric2.jpg"
-              alt="Catalog browsing on a phone"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.style.display = 'none'
-                e.target.parentElement.style.background =
-                  'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%)'
-              }}
-            />
+          <ImageTile
+            src="/fabric2.jpg"
+            alt="Catalog browsing on a phone"
+            className="aspect-[4/3] shadow-2xl shadow-violet-500/10"
+          />
+          <div className="grid grid-cols-3 gap-4 mt-6">
+            {HERO_THUMBNAILS.map((thumb) => (
+              <ImageTile
+                key={thumb.src}
+                src={thumb.src}
+                alt={thumb.alt}
+                className="aspect-square shadow-lg shadow-gray-900/10"
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -469,6 +502,106 @@ function VisualSearchSection() {
   )
 }
 
+// ── Gallery ────────────────────────────────────────────────────────────
+const APP_PREVIEWS = [
+  {
+    title: 'Buyer home feed',
+    description: 'New arrivals and seller updates in one glance.',
+    src: '/images/app-home.jpg',
+    alt: 'Buyer app home feed',
+  },
+  {
+    title: 'Visual search results',
+    description: 'Similar styles ranked instantly after upload.',
+    src: '/images/app-visual-search.jpg',
+    alt: 'Visual search results screen',
+  },
+  {
+    title: 'WhatsApp order flow',
+    description: 'Confirm quantities and send in one tap.',
+    src: '/images/app-order.jpg',
+    alt: 'WhatsApp order confirmation screen',
+  },
+]
+
+const CATALOG_GALLERY = [
+  { label: 'Knitwear sets', src: '/images/catalog-knitwear.jpg', alt: 'Knitwear catalog set' },
+  { label: 'Saree assortment', src: '/images/catalog-sarees.jpg', alt: 'Saree assortment' },
+  { label: 'Suiting collection', src: '/images/catalog-suiting.jpg', alt: 'Suiting collection' },
+  { label: 'Printed fabrics', src: '/images/catalog-prints.jpg', alt: 'Printed fabric rolls' },
+  { label: 'Embroidery closeups', src: '/images/catalog-embroidery.jpg', alt: 'Embroidery details' },
+  {
+    label: 'Home textiles',
+    src: '/images/catalog-home-textiles.jpg',
+    alt: 'Home textile collection',
+  },
+]
+
+function GallerySection() {
+  return (
+    <section id="gallery" className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="max-w-2xl mb-12">
+          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-violet-500">
+            Product gallery
+          </span>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mt-3 scroll-reveal">
+            See the buyer experience in action
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mt-4 fade-up">
+            Preview the branded buyer app, then explore a sample catalog moodboard built from
+            real-world fabric collections.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6 stagger-in">
+          {APP_PREVIEWS.map(({ title, description, src, alt }) => (
+            <div
+              key={title}
+              className="bg-white dark:bg-[#242424] border border-gray-100 dark:border-gray-800 rounded-2xl p-5"
+            >
+              <ImageTile src={src} alt={alt} className="aspect-[4/5]" />
+              <div className="mt-4">
+                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                  {description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white">
+                Catalog moodboard
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                Mix-and-match fabric styles buyers love to request.
+              </p>
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
+              add fresh seasonal imagery
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 stagger-in">
+            {CATALOG_GALLERY.map(({ label, src, alt }) => (
+              <div key={label} className="relative">
+                <ImageTile src={src} alt={alt} className="aspect-[4/3]" />
+                <span className="absolute bottom-4 left-4 text-xs font-semibold uppercase tracking-[0.25em] text-white drop-shadow">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ── Seller Types ──────────────────────────────────────────────────────
 const SELLER_TYPES = [
   {
@@ -766,6 +899,7 @@ function Footer() {
               { label: 'Features', href: '#features' },
               { label: 'How It Works', href: '#how-it-works' },
               { label: 'Visual Search', href: '#visual-search' },
+              { label: 'Gallery', href: '#gallery' },
               { label: 'Contact', href: '#contact' },
               { label: 'Privacy Policy', href: '#' },
             ].map(({ label, href }) => (
@@ -811,6 +945,7 @@ export default function App() {
         <HowItWorks />
         <FeaturesSection />
         <VisualSearchSection />
+        <GallerySection />
         <SellerTypesSection />
         <TrustSection />
         <FAQSection />
