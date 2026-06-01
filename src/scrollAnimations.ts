@@ -48,11 +48,23 @@ export function initScrollAnimations(): () => void {
     // Helper — always re-splits so StrictMode second run starts fresh
     function splitWords(el: HTMLElement) {
       const raw = el.textContent?.trim() ?? ''
-      el.innerHTML = raw
-        .split(/\s+/)
-        .map((w) => `<span class="gsap-word">${w}</span>`)
-        .join(' ')
-      return el.querySelectorAll('.gsap-word')
+      el.textContent = ''
+      const words = raw.split(/\s+/)
+      const spans: HTMLSpanElement[] = []
+
+      words.forEach((word, index) => {
+        const span = document.createElement('span')
+        span.className = 'gsap-word'
+        span.textContent = word
+        el.appendChild(span)
+        spans.push(span)
+
+        if (index < words.length - 1) {
+          el.appendChild(document.createTextNode(' '))
+        }
+      })
+
+      return spans
     }
 
     // ── Hero heading word burst ─────────────────────────────────────
