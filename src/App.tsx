@@ -1,4 +1,10 @@
-import { useState, useEffect } from 'react'
+import {
+  useState,
+  useEffect,
+  type ChangeEvent,
+  type FormEvent,
+  type SyntheticEvent,
+} from 'react'
 import {
   Moon,
   Sun,
@@ -21,7 +27,29 @@ import {
 import { initScrollAnimations } from './scrollAnimations'
 
 // ── Navbar ────────────────────────────────────────────────────────────
-function Navbar({ dark, toggleDark }) {
+type NavbarProps = {
+  dark: boolean
+  toggleDark: () => void
+}
+
+type ImageTileProps = {
+  src: string
+  alt: string
+  className?: string
+  imageClassName?: string
+}
+
+type FormState = {
+  name: string
+  business: string
+  phone: string
+  city: string
+  buyers: string
+}
+
+type FormFieldKey = keyof FormState
+
+function Navbar({ dark, toggleDark }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const navLinks = [
@@ -114,14 +142,14 @@ function Navbar({ dark, toggleDark }) {
   )
 }
 
-function ImageTile({ src, alt, className = '', imageClassName = '' }) {
-  const handleError = (event) => {
+function ImageTile({ src, alt, className = '', imageClassName = '' }: ImageTileProps) {
+  const handleError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = event.currentTarget
     target.style.display = 'none'
-    if (target.parentElement) {
-      target.parentElement.style.background =
-        'linear-gradient(135deg, #0f172a 0%, #312e81 45%, #7c3aed 100%)'
-    }
+    target.parentElement?.style?.setProperty(
+      'background',
+      'linear-gradient(135deg, #0f172a 0%, #312e81 45%, #7c3aed 100%)',
+    )
   }
 
   return (
@@ -753,7 +781,13 @@ function CTASection() {
 }
 
 // ── Contact / Lead Form ───────────────────────────────────────────────
-const FORM_FIELDS = [
+const FORM_FIELDS: Array<{
+  label: string
+  key: FormFieldKey
+  placeholder: string
+  type: string
+  required: boolean
+}> = [
   { label: 'Your Name', key: 'name', placeholder: 'Enter your name', type: 'text', required: true },
   { label: 'Business Name', key: 'business', placeholder: 'Enter your business name', type: 'text', required: true },
   { label: 'Phone Number', key: 'phone', placeholder: 'Enter your phone number', type: 'tel', required: true },
@@ -762,16 +796,26 @@ const FORM_FIELDS = [
 ]
 
 function ContactForm() {
-  const [form, setForm] = useState({ name: '', business: '', phone: '', city: '', buyers: '' })
+  const [form, setForm] = useState<FormState>({
+    name: '',
+    business: '',
+    phone: '',
+    city: '',
+    buyers: '',
+  })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     setLoading(true)
-    await new Promise(r => setTimeout(r, 800))
+    await new Promise<void>((resolve) => setTimeout(resolve, 800))
     setLoading(false)
     setSubmitted(true)
+  }
+
+  const handleFieldChange = (key: FormFieldKey) => (event: ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({ ...prev, [key]: event.target.value }))
   }
 
   return (
@@ -857,7 +901,7 @@ function ContactForm() {
                     required={required}
                     placeholder={placeholder}
                     value={form[key]}
-                    onChange={e => setForm({ ...form, [key]: e.target.value })}
+                    onChange={handleFieldChange(key)}
                     className="w-full px-4 py-3 bg-gray-100 dark:bg-[#2a2a2a] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-violet-500 text-sm transition-shadow"
                   />
                 </div>
@@ -933,7 +977,7 @@ export default function App() {
 
   useEffect(() => {
     const cleanup = initScrollAnimations()
-    return cleanup || (() => {})
+    return cleanup
   }, [])
 
   return (
