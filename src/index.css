@@ -33,6 +33,17 @@ html.dark body {
   will-change: transform;
 }
 
+/* ── Sticky scroll panel ───────────────────────────────────── */
+.sticky-panel {
+  position: sticky;
+  top: 120px;
+}
+
+/* ── Parallax cards ────────────────────────────────────────── */
+.parallax-card {
+  will-change: transform, opacity;
+}
+
 /* ── Progress bar ────────────────────────────────────────── */
 #gsap-progress-bar {
   position: fixed;
@@ -59,5 +70,9 @@ html.dark body {
   .feature-card {
     width: 100% !important;
     min-width: unset !important;
+  }
+
+  .sticky-panel {
+    position: static;
   }
 }

@@ -1,8 +1,22 @@
 import { useState, useEffect } from 'react'
 import {
-  Moon, Sun, Smartphone, AlignJustify, Users, CheckCircle2,
-  Bell, Search, FolderOpen, UserMinus, Menu, X,
-  MapPin, Phone, Clock,
+  Moon,
+  Sun,
+  Menu,
+  X,
+  BadgeCheck,
+  Image,
+  MessageCircle,
+  ShoppingCart,
+  ShieldCheck,
+  Layers,
+  Bell,
+  Sparkles,
+  CheckCircle2,
+  Users,
+  MapPin,
+  Phone,
+  Clock,
 } from 'lucide-react'
 import { initScrollAnimations } from './scrollAnimations'
 
@@ -13,12 +27,14 @@ function Navbar({ dark, toggleDark }) {
   const navLinks = [
     { label: 'Features', href: '#features' },
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Visual Search', href: '#visual-search' },
+    { label: 'Seller Types', href: '#seller-types' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ]
 
   return (
-    <nav className="sticky top-0 z-50 bg-white dark:bg-[#141414] border-b border-gray-100 dark:border-gray-800">
+    <nav className="sticky top-0 z-50 bg-white/90 dark:bg-[#141414]/90 border-b border-gray-100 dark:border-gray-800 backdrop-blur">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex-shrink-0" />
@@ -51,7 +67,7 @@ function Navbar({ dark, toggleDark }) {
             href="#contact"
             className="px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"
           >
-            Get a Free Demo
+            Request a Demo
           </a>
         </div>
 
@@ -88,7 +104,7 @@ function Navbar({ dark, toggleDark }) {
               className="flex-1 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-semibold text-center"
               onClick={() => setMenuOpen(false)}
             >
-              Get a Free Demo
+              Request a Demo
             </a>
           </div>
         </div>
@@ -103,25 +119,28 @@ function Hero() {
     <section id="hero-section" className="bg-white dark:bg-[#141414] py-16 md:py-24 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
         <div className="flex-1">
+          <span className="inline-flex items-center gap-2 rounded-full bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-300 text-xs font-semibold uppercase tracking-[0.3em] px-4 py-2 mb-6">
+            Order from verified catalogs
+          </span>
           <h1
             id="hero-heading"
-            className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] mb-6"
+            className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-[1.05] mb-6"
           >
-            The Digital Catalog System for Fabric Wholesalers
+            Browse, search, and place orders in minutes.
           </h1>
           <p
             id="hero-subtext"
-            className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-lg"
+            className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed max-w-xl"
           >
-            Stop sending catalog photos on WhatsApp. Give your buyers a private
-            branded app — and manage everything from one place.
+            Browse a seller’s live catalog, search products by photo, and place an order
+            request in minutes—right from your phone.
           </p>
           <div id="hero-cta" className="flex flex-wrap gap-3">
             <a
               href="#contact"
               className="px-6 py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-semibold text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"
             >
-              Book a Free Demo
+              Get Access
             </a>
             <a
               href="#how-it-works"
@@ -133,10 +152,10 @@ function Hero() {
         </div>
 
         <div id="hero-image-wrap" className="flex-1 w-full" style={{ willChange: 'transform' }}>
-          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 dark:bg-gray-800">
+          <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 dark:bg-gray-800 shadow-2xl shadow-violet-500/10">
             <img
-              src="/fabric.jpg"
-              alt="Colorful fabric thread bobbins"
+              src="/fabric2.jpg"
+              alt="Catalog browsing on a phone"
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.target.style.display = 'none'
@@ -151,40 +170,49 @@ function Hero() {
   )
 }
 
-// ── Problem Section ───────────────────────────────────────────────────
-const PROBLEMS = [
+// ── Value Props ───────────────────────────────────────────────────────
+const VALUE_PROPS = [
   {
-    Icon: Smartphone,
-    title: 'Manual Photo Sharing',
-    description: 'Sending catalog photos to 50+ buyers every week — manually, one by one',
+    Icon: BadgeCheck,
+    title: 'Access verified catalogs',
+    description:
+      'Request access using a store code. Open sellers grant instant access, while approval-based sellers keep pricing private.',
   },
   {
-    Icon: AlignJustify,
-    title: 'Scattered Orders',
-    description: "Orders coming in over calls, messages, screenshots — no system, things get missed",
+    Icon: Image,
+    title: 'Search by photo',
+    description:
+      'Upload a photo or screenshot and instantly find visually similar products in the catalogs you can view.',
   },
   {
-    Icon: Users,
-    title: 'No Control',
-    description: "No way to control who sees your prices or track what's been handled",
+    Icon: MessageCircle,
+    title: 'Order via WhatsApp in 1 tap',
+    description:
+      'Select items, confirm your WhatsApp message, and your request becomes pending with live status updates.',
   },
 ]
 
-function ProblemSection() {
+function ValueProps() {
   return (
     <section className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-12 scroll-reveal">
-          Still running your business on WhatsApp?
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6 stagger-in">
-          {PROBLEMS.map(({ Icon, title, description }) => (
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 scroll-reveal">
+            Order from your supplier faster.
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed fade-up">
+            Sauda2Sales connects buyers and sellers with secure access, live catalogs, and
+            a streamlined WhatsApp order workflow.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6 mt-12 stagger-in">
+          {VALUE_PROPS.map(({ Icon, title, description }) => (
             <div
               key={title}
               className="bg-white dark:bg-[#242424] rounded-2xl p-7 border border-gray-100 dark:border-gray-800"
             >
-              <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center mb-5">
-                <Icon size={22} className="text-red-500" />
+              <div className="w-12 h-12 rounded-xl bg-violet-50 dark:bg-violet-900/20 flex items-center justify-center mb-5">
+                <Icon size={22} className="text-violet-500" />
               </div>
               <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{title}</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{description}</p>
@@ -196,20 +224,48 @@ function ProblemSection() {
   )
 }
 
-// ── Solution Section ──────────────────────────────────────────────────
-function SolutionSection() {
+// ── How It Works ──────────────────────────────────────────────────────
+const STEPS = [
+  {
+    number: '1',
+    title: 'Choose your seller or brand',
+    description: 'Pick a supplier and enter their store access code to get started.',
+  },
+  {
+    number: '2',
+    title: 'Get access',
+    description: 'Instant for open catalogs, or wait for approval if the seller requires it.',
+  },
+  {
+    number: '3',
+    title: 'Browse and search',
+    description: 'See live inventory, search by keywords, or use photo search to find similar designs.',
+  },
+  {
+    number: '4',
+    title: 'Send your order on WhatsApp',
+    description: 'Confirm the WhatsApp message and track the request status in-app.',
+  },
+]
+
+function HowItWorks() {
   return (
-    <section className="bg-white dark:bg-[#141414] py-20 px-6">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-6 scroll-reveal">
-          One system. Two apps. Total control.
+    <section id="how-it-works" className="bg-white dark:bg-[#141414] py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-16 scroll-reveal">
+          How it works in 4 steps
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed fade-up">
-          Sauda2Sales gives you a private seller app to manage your full catalog — and a
-          white-labeled buyer app your dealers install on their phones. Push a product live
-          and every approved buyer gets notified instantly. Pull it when it's gone. All
-          orders land in one place.
-        </p>
+        <div className="grid md:grid-cols-4 gap-8 text-center stagger-in">
+          {STEPS.map(({ number, title, description }) => (
+            <div key={number} className="flex flex-col items-center">
+              <div className="w-14 h-14 rounded-full bg-gray-900 dark:bg-white flex items-center justify-center mb-5 flex-shrink-0">
+                <span className="text-white dark:text-gray-900 font-black text-xl">{number}</span>
+              </div>
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{title}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -218,46 +274,46 @@ function SolutionSection() {
 // ── Features Section — horizontal scroll ─────────────────────────────
 const FEATURES = [
   {
-    Icon: CheckCircle2,
+    Icon: BadgeCheck,
     iconBg: 'bg-blue-50 dark:bg-blue-900/20',
     iconColor: 'text-blue-500',
-    title: 'Live Catalog',
-    description: "Push products live with one tap. Pull them off when they're sold. Your catalog is always current.",
+    title: 'Access & onboarding',
+    description: 'Request access with a store code, with instant access or approval-based gating.',
   },
   {
-    Icon: Smartphone,
+    Icon: Layers,
     iconBg: 'bg-purple-50 dark:bg-purple-900/20',
     iconColor: 'text-purple-500',
-    title: "Your Buyers' Own App",
-    description: "Your buyers get an app with your business name and logo — not a generic marketplace.",
+    title: 'Live catalog browsing',
+    description: 'See only live items with photos, names, types, and selling prices.',
+  },
+  {
+    Icon: Sparkles,
+    iconBg: 'bg-amber-50 dark:bg-amber-900/20',
+    iconColor: 'text-amber-500',
+    title: 'Visual search',
+    description: 'Upload a photo to find visually similar products across the sellers you access.',
+  },
+  {
+    Icon: ShoppingCart,
+    iconBg: 'bg-emerald-50 dark:bg-emerald-900/20',
+    iconColor: 'text-emerald-500',
+    title: 'Cart & shortlist',
+    description: 'Add items to a seller-specific cart and adjust quantities before ordering.',
+  },
+  {
+    Icon: MessageCircle,
+    iconBg: 'bg-pink-50 dark:bg-pink-900/20',
+    iconColor: 'text-pink-500',
+    title: 'Order request + WhatsApp',
+    description: 'Create an order request, send via WhatsApp, and mark it as sent.',
   },
   {
     Icon: Bell,
-    iconBg: 'bg-green-50 dark:bg-green-900/20',
-    iconColor: 'text-green-500',
-    title: 'Instant Push Notifications',
-    description: 'The moment you push a new fabric live, all your approved buyers get notified on their phones.',
-  },
-  {
-    Icon: Search,
-    iconBg: 'bg-orange-50 dark:bg-orange-900/20',
-    iconColor: 'text-orange-400',
-    title: 'Visual Fabric Search',
-    description: 'Buyers upload a photo of a fabric and the app finds the closest match in your catalog using AI.',
-  },
-  {
-    Icon: FolderOpen,
     iconBg: 'bg-indigo-50 dark:bg-indigo-900/20',
     iconColor: 'text-indigo-500',
-    title: 'Order Management',
-    description: "All buyer requests land in your app. See pending orders, mark them handled. Nothing falls through.",
-  },
-  {
-    Icon: UserMinus,
-    iconBg: 'bg-pink-50 dark:bg-pink-900/20',
-    iconColor: 'text-pink-500',
-    title: 'Controlled Access',
-    description: 'You decide who sees your catalog. Approve buyers individually. Remove anyone, anytime.',
+    title: 'Status updates',
+    description: 'Track approvals and order status changes directly inside the app.',
   },
 ]
 
@@ -268,17 +324,15 @@ function FeaturesSection() {
       className="h-scroll-section bg-gray-50 dark:bg-[#1a1a1a]"
       style={{ minHeight: '100vh' }}
     >
-      {/* Heading — stays visible while section is pinned */}
       <div className="px-6 pt-14 pb-8 text-center">
         <span className="text-xs font-semibold tracking-[0.25em] uppercase text-violet-500">
-          What you get
+          Core features
         </span>
         <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mt-3 scroll-reveal">
-          Everything your fabric business needs
+          Everything buyers need to order confidently
         </h2>
       </div>
 
-      {/* Horizontal card strip */}
       <div className="overflow-hidden">
         <div
           className="features-strip"
@@ -310,7 +364,6 @@ function FeaturesSection() {
         </div>
       </div>
 
-      {/* Desktop scroll hint */}
       <p className="hidden md:block text-center text-xs text-gray-400 dark:text-gray-600 mt-8 mb-6 tracking-[0.2em] uppercase">
         scroll to explore →
       </p>
@@ -318,37 +371,138 @@ function FeaturesSection() {
   )
 }
 
-// ── How It Works ──────────────────────────────────────────────────────
-const STEPS = [
+// ── Visual Search ─────────────────────────────────────────────────────
+const VISUAL_CARDS = [
   {
-    number: '1',
-    title: 'Add your catalog',
-    description: 'Upload fabric photos, set prices, and publish products. Your catalog is live instantly.',
+    eyebrow: 'Key benefits',
+    title: 'Faster discovery',
+    items: [
+      'No need to guess product names or codes.',
+      'Results ranked by visual similarity.',
+      'Search across every seller you’re approved to view.',
+      'Private and controlled by your catalog access.',
+    ],
   },
   {
-    number: '2',
-    title: 'Buyers browse and order',
-    description: "Your dealers install your branded app, browse what's live, and send order requests directly.",
+    eyebrow: 'How it works',
+    title: '3 simple steps',
+    items: [
+      'Upload a photo from your camera or gallery.',
+      'We create a visual signature from the image.',
+      'Vector similarity search returns the closest matches.',
+    ],
   },
   {
-    number: '3',
-    title: 'You handle everything in one place',
-    description: 'Get notified of new orders, see all pending requests, and mark them done.',
+    eyebrow: 'Technical details',
+    title: 'AI embeddings + vector search',
+    description:
+      'Under the hood, the photo is converted into an AI embedding vector and matched with nearest-neighbor search using cosine distance. This is not keyword matching.',
+  },
+  {
+    eyebrow: 'Trust & limits',
+    title: 'Fair-use built in',
+    description:
+      'To keep search fast and fair for everyone, usage may be rate-limited based on monthly activity.',
   },
 ]
 
-function HowItWorks() {
+function VisualSearchSection() {
   return (
-    <section id="how-it-works" className="bg-white dark:bg-[#141414] py-20 px-6">
+    <section id="visual-search" className="bg-white dark:bg-[#141414] py-24 px-6">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 items-start">
+        <div className="sticky-panel">
+          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-violet-500">
+            Visual Search
+          </span>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mt-4 mb-5 scroll-reveal">
+            Find products by photo, instantly.
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mb-8 fade-up">
+            Upload a product photo and we’ll show the closest matches from the seller catalogs
+            you have access to—ranked by visual similarity.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="#contact"
+              className="px-5 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-semibold hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"
+            >
+              Try visual search
+            </a>
+            <a
+              href="#features"
+              className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >
+              See all features
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-8">
+          {VISUAL_CARDS.map(({ eyebrow, title, items, description }) => (
+            <div
+              key={title}
+              className="parallax-card bg-gray-50 dark:bg-[#1a1a1a] border border-gray-100 dark:border-gray-800 rounded-2xl p-8 shadow-lg shadow-violet-500/5"
+            >
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-500">
+                {eyebrow}
+              </span>
+              <h3 className="font-bold text-gray-900 dark:text-white text-xl mt-3">{title}</h3>
+              {items ? (
+                <ul className="mt-4 space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                  {items.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">
+                  {description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Seller Types ──────────────────────────────────────────────────────
+const SELLER_TYPES = [
+  {
+    Icon: BadgeCheck,
+    title: 'Open catalog sellers',
+    description: 'Access is instant after store code verification or link-based access.',
+  },
+  {
+    Icon: ShieldCheck,
+    title: 'Approval-based sellers',
+    description: 'You request access, and the seller approves before you can view pricing.',
+  },
+  {
+    Icon: Users,
+    title: 'Multi-user seller teams',
+    description: 'Seller staff and managers handle approvals and replies quickly.',
+  },
+]
+
+function SellerTypesSection() {
+  return (
+    <section id="seller-types" className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-16 scroll-reveal">
-          Up and running in 3 steps
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-12 scroll-reveal">
+          Understand seller access modes
         </h2>
-        <div className="grid md:grid-cols-3 gap-10 text-center stagger-in">
-          {STEPS.map(({ number, title, description }) => (
-            <div key={number} className="flex flex-col items-center">
-              <div className="w-14 h-14 rounded-full bg-gray-900 dark:bg-white flex items-center justify-center mb-5 flex-shrink-0">
-                <span className="text-white dark:text-gray-900 font-black text-xl">{number}</span>
+        <div className="grid md:grid-cols-3 gap-6 stagger-in">
+          {SELLER_TYPES.map(({ Icon, title, description }) => (
+            <div
+              key={title}
+              className="bg-white dark:bg-[#242424] rounded-2xl p-7 border border-gray-100 dark:border-gray-800"
+            >
+              <div className="w-12 h-12 rounded-xl bg-violet-50 dark:bg-violet-900/20 flex items-center justify-center mb-5">
+                <Icon size={22} className="text-violet-500" />
               </div>
               <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{title}</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{description}</p>
@@ -360,53 +514,106 @@ function HowItWorks() {
   )
 }
 
-// ── Built For ─────────────────────────────────────────────────────────
-const BUILT_FOR = [
-  'Saree and fabric wholesalers in Surat',
-  'Businesses with 10–500+ dealer/buyer relationships',
-  'Sellers who want to stop managing catalog sharing manually',
-  'Teams — add managers who can see products but not your purchase prices',
+// ── Trust & Safety ────────────────────────────────────────────────────
+const TRUST_POINTS = [
+  'Buyers see only buyer-safe catalog data — internal costs stay private.',
+  'Sellers control who can access pricing and can remove access anytime.',
+  'All accounts are authenticated with secure sign-in.',
 ]
 
-function BuiltFor() {
+function TrustSection() {
   return (
-    <section className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="bg-white dark:bg-[#141414] py-20 px-6">
+      <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-10 scroll-reveal">
-          Built for the fabric trade
+          Built for B2B trust and safety
         </h2>
-        <ul className="flex flex-col gap-4 stagger-in">
-          {BUILT_FOR.map((item, i) => (
-            <li key={i} className="flex items-start gap-3">
-              <span className="mt-2 w-2 h-2 rounded-full bg-violet-500 flex-shrink-0" />
-              <span className="text-gray-700 dark:text-gray-200 text-base leading-relaxed">{item}</span>
-            </li>
+        <div className="grid md:grid-cols-3 gap-6 stagger-in">
+          {TRUST_POINTS.map((point) => (
+            <div
+              key={point}
+              className="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-100 dark:border-gray-800 rounded-2xl p-6"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-4">
+                <CheckCircle2 size={18} className="text-emerald-500" />
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{point}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   )
 }
 
-// ── Pricing Section ───────────────────────────────────────────────────
-function PricingSection() {
+// ── FAQ ───────────────────────────────────────────────────────────────
+const FAQS = [
+  {
+    question: 'Do I need approval to access a catalog?',
+    answer: 'It depends on the seller. Open catalogs grant instant access, while approval-based sellers must accept your request.',
+  },
+  {
+    question: 'How do I get the store code?',
+    answer: 'Sellers share their store access code or invite link directly with their buyers.',
+  },
+  {
+    question: 'How do orders work?',
+    answer: 'You select items, confirm a WhatsApp order message, and track the request status inside the app.',
+  },
+]
+
+function FAQSection() {
   return (
-    <section id="pricing" className="bg-white dark:bg-[#141414] py-20 px-6">
-      <div className="max-w-3xl mx-auto text-center fade-up">
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 scroll-reveal">
-          Pricing
+    <section id="faq" className="bg-gray-50 dark:bg-[#1a1a1a] py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-12 scroll-reveal">
+          Frequently asked questions
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mb-8">
-          We tailor every setup to the size and needs of your business — catalog volume,
-          number of buyers, and required features all factor in. Get in touch and we'll
-          give you a straight quote with no hidden charges.
+        <div className="flex flex-col gap-6 stagger-in">
+          {FAQS.map(({ question, answer }) => (
+            <div
+              key={question}
+              className="bg-white dark:bg-[#242424] border border-gray-100 dark:border-gray-800 rounded-2xl p-6"
+            >
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{question}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── CTA ───────────────────────────────────────────────────────────────
+function CTASection() {
+  return (
+    <section className="bg-gradient-to-br from-gray-900 via-gray-900 to-violet-900 py-20 px-6">
+      <div className="max-w-5xl mx-auto text-center text-white">
+        <h2 className="text-3xl md:text-4xl font-black mb-4">Ready to order from verified catalogs?</h2>
+        <p className="text-gray-200 mb-8">
+          Get access, request a demo, or download your branded buyer app today.
         </p>
-        <a
-          href="#contact"
-          className="inline-block px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-bold text-sm hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"
-        >
-          Contact Us for Pricing
-        </a>
+        <div className="flex flex-wrap justify-center gap-3">
+          <a
+            href="#contact"
+            className="px-6 py-3.5 bg-white text-gray-900 rounded-xl font-semibold text-sm hover:bg-gray-100 transition-colors"
+          >
+            Get Access
+          </a>
+          <a
+            href="#contact"
+            className="px-6 py-3.5 border border-white/40 text-white rounded-xl font-semibold text-sm hover:bg-white/10 transition-colors"
+          >
+            Request a Demo
+          </a>
+          <a
+            href="#contact"
+            className="px-6 py-3.5 border border-white/40 text-white rounded-xl font-semibold text-sm hover:bg-white/10 transition-colors"
+          >
+            Download App
+          </a>
+        </div>
       </div>
     </section>
   )
@@ -438,14 +645,13 @@ function ContactForm() {
     <section id="contact" className="bg-white dark:bg-[#141414] py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white text-center mb-3 scroll-reveal">
-          Ready to modernize your catalog?
+          Get access or request a demo
         </h2>
         <p className="text-gray-500 dark:text-gray-400 text-center mb-12 fade-up">
-          Tell us about your business and we'll set up a free 15-minute walkthrough.
+          Tell us about your business and we’ll set up a personalized walkthrough.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 items-start stagger-in">
-          {/* Contact info */}
           <div className="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-100 dark:border-gray-800 rounded-2xl p-8 flex flex-col gap-6">
             <div>
               <h3 className="font-black text-gray-900 dark:text-white text-xl mb-1">Techgeekz Services</h3>
@@ -497,11 +703,10 @@ function ContactForm() {
             </div>
           </div>
 
-          {/* Lead form */}
           {submitted ? (
             <div className="text-center py-16 bg-gray-50 dark:bg-[#1a1a1a] rounded-2xl border border-gray-100 dark:border-gray-800">
               <div className="text-6xl mb-5">✅</div>
-              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">We'll be in touch!</h3>
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">We’ll be in touch!</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm">Expect a call within 24 hours.</p>
             </div>
           ) : (
@@ -530,11 +735,11 @@ function ContactForm() {
                 disabled={loading}
                 className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-bold text-base hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors mt-2 disabled:opacity-60"
               >
-                {loading ? 'Sending...' : 'Book My Free Demo'}
+                {loading ? 'Sending...' : 'Book My Demo'}
               </button>
 
               <p className="text-xs text-gray-400 dark:text-gray-600 text-center">
-                We'll reach out within 24 hours. No spam, no pressure.
+                We’ll reach out within 24 hours. No spam, no pressure.
               </p>
             </form>
           )}
@@ -553,13 +758,14 @@ function Footer() {
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex-shrink-0" />
             <span className="font-bold text-gray-900 dark:text-white">
-              Sauda2Sales — The fabric trade, modernized.
+              Sauda2Sales — B2B ordering, simplified.
             </span>
           </div>
           <div className="flex flex-wrap gap-6 justify-center">
             {[
               { label: 'Features', href: '#features' },
               { label: 'How It Works', href: '#how-it-works' },
+              { label: 'Visual Search', href: '#visual-search' },
               { label: 'Contact', href: '#contact' },
               { label: 'Privacy Policy', href: '#' },
             ].map(({ label, href }) => (
@@ -583,12 +789,10 @@ function Footer() {
 
 // ── Root App ──────────────────────────────────────────────────────────
 export default function App() {
-  const [dark, setDark] = useState(true) // default dark for a sophisticated look
+  const [dark, setDark] = useState(true)
 
   const toggleDark = () => setDark(d => !d)
 
-  // Apply dark class to <html> so Tailwind dark: variants work everywhere
-  // and <html>/<body> background doesn't bleed through as white
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
   }, [dark])
@@ -603,12 +807,14 @@ export default function App() {
       <div className="bg-white dark:bg-[#141414] min-h-screen">
         <Navbar dark={dark} toggleDark={toggleDark} />
         <Hero />
-        <ProblemSection />
-        <SolutionSection />
-        <FeaturesSection />
+        <ValueProps />
         <HowItWorks />
-        <BuiltFor />
-        <PricingSection />
+        <FeaturesSection />
+        <VisualSearchSection />
+        <SellerTypesSection />
+        <TrustSection />
+        <FAQSection />
+        <CTASection />
         <ContactForm />
         <Footer />
       </div>
