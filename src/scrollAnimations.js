@@ -118,6 +118,25 @@ export function initScrollAnimations() {
       });
     });
 
+    // ── Parallax reveal cards ───────────────────────────────────────
+    document.querySelectorAll('.parallax-card').forEach((card) => {
+      gsap.fromTo(
+        card,
+        { y: 80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 55%',
+            scrub: 0.8,
+          },
+        },
+      );
+    });
+
     // ── Horizontal features scroll (desktop only) ───────────────────
     if (window.innerWidth > 768) {
       const hSection = document.querySelector('.h-scroll-section');
